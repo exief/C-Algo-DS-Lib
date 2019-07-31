@@ -33,23 +33,6 @@ void SuffixTrieInsert(SuffixTrieNode* r, const char* s) {
     }
 }
 
-bool search(struct TrieNode *root, const char *key) 
-{  
-    int length = strlen(key); 
-    int index = *key; 
-    struct TrieNode *pCrawl = root; 
-  
-    for (int level = 0; level < length; level++) 
-    { 
-        if (!pCrawl->children[*(key + ind)]) 
-            return false; 
-  
-        pCrawl = pCrawl->children[*(key + ind)]; 
-    } 
-  
-    return (pCrawl != NULL && pCrawl->isEndOfWord); 
-} 
-
 bool SuffixTrieSearch(SuffixTrieNode* r, const char* s) {
     SuffixTrieNode* crawler = r;
     if(!strlen(key)) {
