@@ -1,17 +1,20 @@
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdio.h>
 
 struct SuffixTrieNode {
-    char data = NULL;
-    SuffixTrieNode* children;
-    bool isEndOfWord = false;
+    char data;
+    struct SuffixTrieNode** children;
+    bool isEndOfWord;
 } SuffixTrieNode;
 
 struct SuffixTrie {
-    SuffixTrieNode* root;
-    void (*insert)(SuffixTrieNode*, const char*) = &SuffixTrieInsert;
-    bool (*search)(SuffixTrieNode*, const char*) = &SuffixTrieSearch;
-}
+    struct SuffixTrieNode* root;
+    void (*insert)(struct SuffixTrieNode*, char*);
+    bool (*search)(struct SuffixTrieNode*, char*);
+};
 
 struct SuffixTrieNode *getNode(char d);
-void SuffixTrieInsert(SuffixTrieNode* r, const char* s);
-bool SuffixTrieSearch((SuffixTrieNode* r, const char* s);
+void SuffixTrieInsert(struct SuffixTrieNode* r, char* s);
+bool SuffixTrieSearch(struct SuffixTrieNode* r, char* s, uint iter);

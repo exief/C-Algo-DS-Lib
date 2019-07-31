@@ -1,10 +1,12 @@
+#include "Suffix-Trie.h"
+
 struct SuffixTrieNode *getNode(char d) { 
-    struct SuffixTrieNode *pNode =  (SuffixTrieNode*)malloc(sizeof(SuffixTrieNode)); 
+    struct SuffixTrieNode *pNode =  (struct SuffixTrieNode*)malloc(sizeof(struct SuffixTrieNode)); 
   
     if(pNode) {
         pNode->isEndOfWord = false; 
   
-        pNode->children = (SuffixTrieNode*)calloc(256, sizeof(SuffixTrieNode));
+        pNode->children = (struct SuffixTrieNode**)calloc(256, sizeof(struct SuffixTrieNode));
         pNode->data = d;
     } else {
         perror("Error creating node");
@@ -12,32 +14,32 @@ struct SuffixTrieNode *getNode(char d) {
     return pNode; 
 }
 
-void SuffixTrieInsert(SuffixTrieNode* r, const char* s) {
+void SuffixTrieInsert(struct SuffixTrieNode* r, char* s) {
     char** sfx = (char**)malloc((strlen(s)+1) * sizeof(char*));
     char* tmp = s;
-    SuffixTrieNode* crawler = r;
-    for(int i = 0; i < strlen(s); i++){
+    struct SuffixTrieNode* crawler = r;
+    for(uint i = 0; i < strlen(s); i++){
         sfx[i] = (char*) malloc (strlen(tmp) * sizeof(char));
-        for(int j = 0; j < strlen(tmp); j++){
+        for(uint j = 0; j < strlen(tmp); j++){
             sfx[i][j] = tmp[j];
         }
     }
-    for(int i = 0; i < strlen(s); i++) {
-        for(int j = 0; j < strlen(sfx[i]); j++) {
-            if(!crawler->children[sfx[i][j]]) {
-                crawler->children[sfx[i][j]] = getNode(sfx[i][j]);
+    for(uint i = 0; i < strlen(s); i++) {
+        for(uint j = 0; j < strlen(sfx[i]); j++) {
+            if(!crawler->children[(int)sfx[i][j]]) {
+                crawler->children[(int)sfx[i][j]] = getNode((int)sfx[i][j]);
             }
-            crawler = crawler->children[sfx[i][j]];
+            crawler = crawler->children[(int)sfx[i][j]];
         }
         crawler->isEndOfWord = true;
     }
 }
 
-bool SuffixTrieSearch(SuffixTrieNode* r, const char* s) {
-    SuffixTrieNode* crawler = r;
-    if(!strlen(key)) {
-        return (crawler != NULL && crawler->isEndOfWord)
+bool SuffixTrieSearch(struct SuffixTrieNode* r, char* s, uint iter) {
+    struct SuffixTrieNode* crawler = r;
+    if(strlen(s) == iter) {
+        return (crawler != NULL && crawler->isEndOfWord);
     }
 
-    SuffixTrieSearch(crawler->children[*s], ++s);
+    SuffixTrieSearch(crawler->children[(int) *(s + iter)], s, ++iter);
 }
