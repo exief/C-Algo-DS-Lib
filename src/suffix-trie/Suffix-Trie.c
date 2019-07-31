@@ -1,11 +1,14 @@
 struct SuffixTrieNode *getNode(char d) { 
     struct SuffixTrieNode *pNode =  (SuffixTrieNode*)malloc(sizeof(SuffixTrieNode)); 
   
-    pNode->isEndOfWord = false; 
+    if(pNode) {
+        pNode->isEndOfWord = false; 
   
-    pNode->children = (SuffixTrieNode*)calloc(256, sizeof(SuffixTrieNode));
-    pNode->data = d;
-
+        pNode->children = (SuffixTrieNode*)calloc(256, sizeof(SuffixTrieNode));
+        pNode->data = d;
+    } else {
+        perror("Error creating node");
+    }
     return pNode; 
 }
 
@@ -30,6 +33,28 @@ void SuffixTrieInsert(SuffixTrieNode* r, const char* s) {
     }
 }
 
-bool SuffixTrieSearch(SuffixTrieNode* r, const char* s) {
+bool search(struct TrieNode *root, const char *key) 
+{  
+    int length = strlen(key); 
+    int index = *key; 
+    struct TrieNode *pCrawl = root; 
+  
+    for (int level = 0; level < length; level++) 
+    { 
+        if (!pCrawl->children[*(key + ind)]) 
+            return false; 
+  
+        pCrawl = pCrawl->children[*(key + ind)]; 
+    } 
+  
+    return (pCrawl != NULL && pCrawl->isEndOfWord); 
+} 
 
+bool SuffixTrieSearch(SuffixTrieNode* r, const char* s) {
+    SuffixTrieNode* crawler = r;
+    if(!strlen(key)) {
+        return (crawler != NULL && crawler->isEndOfWord)
+    }
+
+    SuffixTrieSearch(crawler->children[*s], ++s);
 }

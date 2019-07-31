@@ -2,8 +2,8 @@
 
 struct SuffixTrieNode {
     char data = NULL;
-    SuffixTrieNode* children = (SuffixTrieNode*)calloc(256, sizeof(SuffixTrieNode));
-    bool isEndOfWord = false;;
+    SuffixTrieNode* children;
+    bool isEndOfWord = false;
 } SuffixTrieNode;
 
 struct SuffixTrie {
